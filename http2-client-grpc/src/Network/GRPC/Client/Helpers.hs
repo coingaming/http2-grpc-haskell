@@ -32,9 +32,9 @@ import Network.HPACK (HeaderList)
 import Data.Monoid ((<>))
 #endif
 
-import Network.HTTP2.Client (frameHttp2RawConnection, ClientIO, ClientError, newHttp2FrameConnection, newHttp2Client, Http2Client(..), IncomingFlowControl(..), GoAwayHandler, FallBackFrameHandler, ignoreFallbackHandler, HostName, PortNumber, TooMuchConcurrency)
-import Network.HTTP2.Client.Helpers (ping)
-import Network.HTTP2.Client.RawConnection (newRawHttp2ConnectionSocket, newRawHttp2ConnectionUnix)
+import Network.HTTP2.Client2 (frameHttp2RawConnection, ClientIO, ClientError, newHttp2FrameConnection, newHttp2Client, Http2Client(..), IncomingFlowControl(..), GoAwayHandler, FallBackFrameHandler, ignoreFallbackHandler, HostName, PortNumber, TooMuchConcurrency)
+import Network.HTTP2.Client2.Helpers (ping)
+import Network.HTTP2.Client2.RawConnection (newRawHttp2ConnectionSocket, newRawHttp2ConnectionUnix)
 import Network.GRPC.Client
 import Network.GRPC.HTTP2.Encoding
 import qualified Network.Socket as Network

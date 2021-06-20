@@ -94,14 +94,14 @@ import Data.Monoid ((<>))
 
 import Network.GRPC.HTTP2.Types
 import Network.GRPC.HTTP2.Encoding
-import Network.HTTP2
+import Network.HTTP2.Frame
 import Network.HPACK
-import Network.HTTP2.Client hiding (next)
-import Network.HTTP2.Client.Helpers
 import Control.Monad (when)
 import Data.Bifunctor (first)
 import Data.Either.Combinators (maybeToRight)
 import Control.Applicative ((<|>))
+import Network.HTTP2.Client2 hiding (next)
+import Network.HTTP2.Client2.Helpers
 
 type CIHeaderList = [(CI ByteString, ByteString)]
 
