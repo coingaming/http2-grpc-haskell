@@ -5,6 +5,7 @@
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies        #-}
+{-# LANGUAGE PackageImports      #-}
 
 -- | A module adding support for gRPC over HTTP2.
 --
@@ -96,7 +97,7 @@ import Network.GRPC.HTTP2.Types
 import Network.GRPC.HTTP2.Encoding
 import Network.HTTP2
 import Network.HPACK
-import Network.HTTP2.Client hiding (next)
+import  "http2-client" Network.HTTP2.Client hiding (next)
 import Network.HTTP2.Client.Helpers
 
 type CIHeaderList = [(CI ByteString, ByteString)]
