@@ -129,11 +129,11 @@ throwOnPushPromise _ _ _ _ _ = lift $ throwIO UnallowedPushPromiseReceived
 
 -- | Wait for an RPC reply.
 waitReply
-  :: forall r o.(GRPCOutput r o)
-  => r -> Decoding -> Http2Stream -> IncomingFlowControl
+  :: forall r o . (GRPCOutput r o)
+  => r -> Decoding -> Http2Client -> Http2Stream -> IncomingFlowControl
   -> ClientIO (RawReply o)
-waitReply rpc decoding stream flowControl =
-    format . fromStreamResult <$> waitStream stream flowControl throwOnPushPromise
+waitReply rpc decoding conn stream flowControl =
+    format . fromStreamResult <$> waitStream conn stream flowControl throwOnPushPromise
   where
     decompress :: Compression
     decompress = _getDecodingCompression decoding
@@ -310,7 +310,7 @@ streamRequest rpc v0 handler = RPCCall  rpc$ \conn stream isfc streamFlowControl
                     go v2
                 Left _ -> do
                     sendData conn stream setEndStream ""
-                    reply <- waitReply rpc decoding stream isfc
+                    reply <- waitReply rpc decoding conn stream isfc
                     pure (v2, reply)
     in go v0
 
@@ -352,7 +352,7 @@ singleRequest
 singleRequest rpc msg = RPCCall rpc $ \conn stream isfc osfc encoding decoding -> do
     let ocfc = _outgoingFlowControl conn
     sendSingleMessage rpc msg encoding setEndStream conn ocfc stream osfc
-    waitReply rpc decoding stream isfc
+    waitReply rpc decoding conn stream isfc
 
 -- | Handler for received message.
 type HandleMessageStep i o a = HeaderList -> a -> o -> ClientIO a
